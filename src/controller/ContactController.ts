@@ -4,7 +4,7 @@ import { Contact } from "../entity/Contact";
 import { validate } from "class-validator";
 
 
-class ContactController{
+export class ContactController{
     static create = async(req: Request, res: Response)=>{
         const contactRepo = AppDataSource.getRepository(Contact);
 
@@ -127,5 +127,3 @@ class ContactController{
         }
     }
 } 
-
-export default ContactController;
