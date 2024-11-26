@@ -4,11 +4,11 @@ import { Contact } from "./entity/Contact"
 
 export const AppDataSource = new DataSource({
     type: "mysql",
-    host: "127.0.0.1",
+    host: "sql5.freemysqlhosting.net",
     port: 3306,
-    username: "root",
-    password: "Keneth.2003",
-    database: "ContactManager",
+    username: "sql5747528",
+    password: "IAQSef5B6s",
+    database: "sql5747528",
     synchronize: true,
     logging: false,
     entities: [Contact],
