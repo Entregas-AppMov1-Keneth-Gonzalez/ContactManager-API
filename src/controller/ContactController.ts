@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Contact } from "../entity/Contact";
 import { validate } from "class-validator";
+import { Raw } from "typeorm";
 
 
 export class ContactController{
@@ -24,6 +25,7 @@ export class ContactController{
             contact.Phone = Phone;
             contact.Email = Email;
             contact.Address = Address;
+            contact.FullName = Name + LastName;
 
             const validateOpt= {ValidationError:{target:false, value:false}};
             const errors= await validate(contact,{validationError:{target:false, value:false}});
@@ -71,6 +73,28 @@ export class ContactController{
             return res.status(404).json({message: "Error al acceder a la base de datos"});
         }
     }
+
+    static getByFullName = async(req: Request, res: Response)=>{
+        try {
+            const FullName = req.params['FullName'];
+
+            if (!FullName){
+                return res.status(400).json({message: "Debe indicar el Nombre y Apellido"});
+            }
+
+            const contactRepo = AppDataSource.getRepository(Contact);
+
+            try {
+                const contact = await contactRepo.findOneOrFail({where:{FullName}});
+                return res.status(200).json(contact);
+            } catch (error) {
+                return res.status(404).json({message: `No existe el contacto con el Nombre y Apellido ${FullName}`});
+            }
+        } catch (error) {
+            return res.status(404).json({message: "Error al acceder a la base de datos"});
+        }
+    }
+    
 
     static update= async(req: Request, res:Response)=>{
         try {

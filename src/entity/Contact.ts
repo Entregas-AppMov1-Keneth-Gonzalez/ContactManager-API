@@ -27,7 +27,6 @@ export class Contact {
     @IsNotEmpty({message:'Debe indicar la direccion.'})
     Address: string; 
 
-    get FullName(): String {
-        return `${this.Name} ${this.LastName}`;
-    }
+    @Column()
+    FullName: string;
 } 
